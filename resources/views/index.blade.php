@@ -24,7 +24,7 @@
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>Product</title>
 </head>
 <body>
 <table class="table table-bordered table-striped" id="renderTable">
@@ -38,7 +38,13 @@
     </tr>
     </thead>
     <tbody id="data_table">
-
+    @foreach(\App\Models\Product::all() as $row)
+        <tr>
+            <td>{{$row->name}}</td>
+            <td>{{$row->price}}</td>
+            <td>{{$row->category->name}}</td>
+        </tr>
+        @endforeach
     </tbody>
 </table>
 
@@ -140,17 +146,17 @@
 
 
 <script>
-    render();
-    function render() {
-        $.ajax({
-           url: "{{route('product.render')}}",
-           method: 'get',
-           dataType: 'json',
-           success: function (data) {
-                $('#data_table').html(data.data_table);
-           }
-        });
-    }
+    {{--render();--}}
+    {{--function render() {--}}
+    {{--    $.ajax({--}}
+    {{--       url: "{{route('product.render')}}",--}}
+    {{--       method: 'get',--}}
+    {{--       dataType: 'json',--}}
+    {{--       success: function (data) {--}}
+    {{--            $('#data_table').html(data.data_table);--}}
+    {{--       }--}}
+    {{--    });--}}
+    {{--}--}}
 
     $('#create-form').click(function () {
         $('#createModal').modal('show');
