@@ -43,9 +43,51 @@
 </table>
 
 <a id="create-form" class="btn btn-success">Add new</a>
-<div id="create-html">
 
+
+
+
+<!-- Modal Create-->
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+            </div>
+            <div class="modal-body">
+                <form id="mainForm">
+                    @csrf
+                    <table class="table table-dark">
+                        <tr>
+                            <td>Name</td>
+                            <td><input class="form-control" type="text" name="name" placeholder="enter name"></td>
+                        </tr>
+                        <tr>
+                            <td>Price</td>
+                            <td><input class="form-control" type="number" name="price" placeholder="product price"></td>
+                        </tr>
+                        <tr>
+                            <td>Category</td>
+                            <td><select name="category_id">
+                                    @foreach(\App\Models\Category::all() as $row)
+                                        <option value="{{$row->id}}">{{$row->name}}</option>
+                                    @endforeach
+                                </select></td>
+                        </tr>
+                    </table>
+                    <input type="submit" value="Add new">
+                </form>
+            </div>
+{{--            <div class="modal-footer">--}}
+{{--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>--}}
+{{--                <button type="button" class="btn btn-primary">Save changes</button>--}}
+{{--            </div>--}}
+        </div>
+    </div>
 </div>
+
+
 
 
 
@@ -109,13 +151,7 @@
     }
 
     $('#create-form').click(function () {
-        $.ajax({
-           url: "{{route('product.create')}}",
-           method: 'get',
-           success: function (data) {
-                $('#create-html').html(data);
-           }
-        });
+        $('#createModal').modal('show');
     });
 
     $(document).on('submit','#mainForm', function (e) {
@@ -125,7 +161,8 @@
             method: 'post',
             data: $('#mainForm').serialize(),
             success: function () {
-                alertify.success("Da add thanh cong");
+                alertify.success("Created successfully!");
+                $('#createModal').modal('hide');
                 render();
             }
         })
@@ -166,10 +203,17 @@
             data: $('#editForm').serialize(),
             success: function () {
                 alertify.success("Updated successfully!");
+                $('#editModal').modal('hide');
                 render();
             }
         })
     })
+
+
+    $('.btn-close').click(function () {
+        $('#createModal').modal('hide');
+        $('#editModal').modal('hide');
+    });
 </script>
 </body>
 </html>
