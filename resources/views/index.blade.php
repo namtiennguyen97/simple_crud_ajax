@@ -38,13 +38,7 @@
     </tr>
     </thead>
     <tbody id="data_table">
-    @foreach(\App\Models\Product::all() as $row)
-        <tr>
-            <td>{{$row->name}}</td>
-            <td>{{$row->price}}</td>
-            <td>{{$row->category->name}}</td>
-        </tr>
-        @endforeach
+
     </tbody>
 </table>
 
@@ -146,17 +140,17 @@
 
 
 <script>
-    {{--render();--}}
-    {{--function render() {--}}
-    {{--    $.ajax({--}}
-    {{--       url: "{{route('product.render')}}",--}}
-    {{--       method: 'get',--}}
-    {{--       dataType: 'json',--}}
-    {{--       success: function (data) {--}}
-    {{--            $('#data_table').html(data.data_table);--}}
-    {{--       }--}}
-    {{--    });--}}
-    {{--}--}}
+    render();
+    function render() {
+        $.ajax({
+           url: "{{route('product.render')}}",
+           method: 'get',
+           dataType: 'json',
+           success: function (data) {
+                $('#data_table').html(data.data_table);
+           }
+        });
+    }
 
     $('#create-form').click(function () {
         $('#createModal').modal('show');
